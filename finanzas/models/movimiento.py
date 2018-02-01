@@ -20,8 +20,8 @@ class movimiento(models.Model):
 class res_users(models.Model):
 	_inherit = "res.users"
 	cuenta_id = fields.One2many(comodel_name="if.cuenta",inverse_name="user_id", string="Cuenta")
-	recomendador_id = fields.Many2one(comodel_name="if.cuenta",)
-	recomendado_ids = fields.One2many(comodel_name="if.cuenta",)
+	recomendador_id = fields.Many2one("res.users", string = "Recomendador")
+	recomendado_ids = fields.One2many(comodel_name="res.users",inverse_name="recomendador_id", string="Recomendados")
 
 class cuenta(models.Model):
 	_name = "if.cuenta"

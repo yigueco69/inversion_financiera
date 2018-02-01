@@ -2,12 +2,12 @@
 <openerp>
     <data>
 
-        <record id="if_transaccion_form" model="ir.ui.view">
+        <record id="if_transaccion_transferencia_form" model="ir.ui.view">
             <field name="name">if.transaccion.form</field>
             <field name="model">if.transaccion</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="transaccions">
+                <form string="Transferencia">
                     <header>
                         <!-- <field name="state" widget="statusbar"/> -->
                     </header>
@@ -15,7 +15,8 @@
 
                         <group>
                             <field name = "numero_transaccion"/>
-                            <field name = "users_id"/>
+                            <field name = "email_user_char"/>
+                            <field name = "user_id"/>
                         </group>
                         <!-- <group col="8"> -->
                             <field name = "movimientos_line">
@@ -32,16 +33,29 @@
             </field>
         </record>
         
-        <record id="action_if_transaccion" model="ir.actions.act_window">
-            <field name="name">transaccions</field>
+        <record id="action_if_transaccion_transferencia" model="ir.actions.act_window">
+            <field name="name">Transferencia</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">if.transaccion</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
+        <!-- <record id="action_tree_view_hrz_comprobante_ingreso_herramienta_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_hrz_comprobante_ingreso_herramienta_tree"/>
+            <field name="act_window_id" ref="action_if_transaccion_transferencia"/>
+        </record> -->
 
-        <menuitem id="menu_transaccion" name="Transacciones"/>
-        <menuitem id="submenu_transaccion" name="transacciones" parent="menu_transaccion" action="action_if_transaccion"/>
+        <record id="action_form_if_transaccion_transferencia" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="if_transaccion_transferencia_form"/>
+            <field name="act_window_id" ref="action_if_transaccion_transferencia"/>
+        </record>
+
+
+        <menuitem id="submenu_transferencia" name="Transferencia" parent="menu_transaccion" action="action_if_transaccion_transferencia"/>
     </data>
 </openerp>

@@ -14,7 +14,9 @@
     ],
     "data": [
             'vistas/movimiento_view.xml',
-            'vistas/transaccion_view.xml',
+            'vistas/retiro_view.xml',
+            'vistas/compra_view.xml',
+            'vistas/transferencia_view.xml',
             'sequence.xml'
 	    ],
     'qweb': [
