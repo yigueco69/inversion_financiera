@@ -14,8 +14,9 @@
                     <sheet>
 
                         <group>
-                            <field name = "numero_transaccion"/>
-                            <field name = "user_id"/>
+                            <field name = "name"/>
+                            <field name = "user_emisor_id"/>
+                            <field name = "user_receptor_id"/>
                         </group>
                         <!-- <group col="8"> -->
                             <field name = "movimientos_line">

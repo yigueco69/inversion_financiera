@@ -17,6 +17,7 @@
             'vistas/retiro_view.xml',
             'vistas/compra_view.xml',
             'vistas/transferencia_view.xml',
+            'vistas/res_users_view.xml',
             'sequence.xml'
 	    ],
     'qweb': [

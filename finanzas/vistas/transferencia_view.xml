@@ -12,20 +12,29 @@
                         <!-- <field name="state" widget="statusbar"/> -->
                     </header>
                     <sheet>
+                        <h1 class="mt0">
+                            <!-- <label string="Draft Refund" attrs="{'invisible': ['|',('state','not in',('draft',)), ('type','&lt;&gt;','out_refund')]}"/> -->
+                            <field name="name" readonly="1" class="oe_inline" />
+                        </h1>
+                        <div class="oe_button_box" name="button_box">
+                            <field name="user_emisor_id"/>
+                        </div>
 
                         <group>
-                            <field name = "numero_transaccion"/>
+                            <field name = "tipo_transaccion"/>
                             <field name = "login_user_char"/>
+                            <field name = "valor"/>
                             
-                            <field name = "user_emisor_id"/>
-                            <field name = "user_receptor_id"/>
+                            
+                            <!-- <field name = "user_emisor_id"/> -->
+                            <field name = "user_receptor_id" invisible="1"/>
                             <field name = "user_receptor_name"/>
                             <field name = "user_receptor_email"/>
                             <field name = "user_receptor_phone"/>
                         </group>
                         <!-- <group col="8"> -->
                             <field name = "movimientos_line">
-                                <tree>
+                                <tree editable="bottom">
                                     <field name = "cuenta_id"/>    
                                     <field name = "entra"/>    
                                     <field name = "sale"/>    
@@ -44,6 +53,12 @@
             <field name="res_model">if.transaccion</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name="domain">[('user_emisor_id','=',uid),('tipo_transaccion','=','transferencia')]</field>
+            <field name="context">{
+                'user_emisor_id': uid,
+                'default_user_emisor_id': uid,
+                'default_tipo_transaccion': 'transferencia',
+                }</field>
         </record>
 
         <!-- <record id="action_tree_view_hrz_comprobante_ingreso_herramienta_tree" model="ir.actions.act_window.view">
