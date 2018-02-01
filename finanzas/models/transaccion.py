@@ -7,9 +7,8 @@ class transaccion(models.Model):
 	_description = "Transaccion"
 	_rec_name = "numero_transaccion"
 	movimientos_line  = fields.Many2many('if.movimiento', "Movimientos")
-	users_id = fields.Many2one("res.users", "")
+	users_id = fields.Many2one("res.users", "Usuario")
 
-	Usuario
 
 	@api.model
 	def get_numero_transaccion(self):
