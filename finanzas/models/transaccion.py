@@ -5,18 +5,25 @@ from openerp.osv import osv
 class transaccion(models.Model):
 	_name = 'if.transaccion'
 	_description = "Transaccion"
-	name = fields.Char(string='Numero de transaccion')
+	name = fields.Char(string='Numero de transaccion', readonly = True)
 
 	movimientos_line  = fields.One2many(comodel_name='if.movimiento', inverse_name="transaccion_id", string="Movimientos")
 
-	user_id = fields.Many2one("res.users", "Usuario", readonly = True)
-	email_user_char = fields.Char("Email")
-	@api.onchange('email_user_char')
+	user_emisor_id = fields.Many2one("res.users", "Usuario Emisor", readonly = True, required=True)
+	user_receptor_id = fields.Many2one("res.users", "Usuario Receptor", readonly = True, required=True)
+	user_receptor_name = fields.Char(related= "user_receptor_id.name", "Nombre del usuario", readonly = True)
+	user_receptor_email = fields.Char(related= "user_receptor_id.email", "Email", readonly = True)
+	user_receptor_phone = fields.Char(related= "user_receptor_id.phone", "Telefono", readonly = True)
+
+	login_user_char = fields.Char("Nombre de usuario a transferir")
+
+	
+	@api.onchange('login_user_char')
 	def onchange_email_user_char(self):
 		# prin
-		result = self.env["res.users"].search([("login","=",self.email_user_char)])
+		result = self.env["res.users"].search([("login","=",self.login_user_char)])
 		if result:
-			self.user_id = result
+			self.user_receptor_id = result
 
 
 	tipo_transaccion = fields.Selection([

@@ -15,8 +15,13 @@
 
                         <group>
                             <field name = "numero_transaccion"/>
-                            <field name = "email_user_char"/>
-                            <field name = "user_id"/>
+                            <field name = "login_user_char"/>
+                            
+                            <field name = "user_emisor_id"/>
+                            <field name = "user_receptor_id"/>
+                            <field name = "user_receptor_name"/>
+                            <field name = "user_receptor_email"/>
+                            <field name = "user_receptor_phone"/>
                         </group>
                         <!-- <group col="8"> -->
                             <field name = "movimientos_line">
