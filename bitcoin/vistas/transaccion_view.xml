@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="if_transaccion_form" model="ir.ui.view">
+            <field name="name">if.transaccion.form</field>
+            <field name="model">if.transaccion</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="transaccions">
+                    <header>
+                        <!-- <field name="state" widget="statusbar"/> -->
+                    </header>
+                    <sheet>
+
+                        <group>
+                            <field name = "numero_transaccion"/>
+                            <field name = "users_id"/>
+                        </group>
+                        <!-- <group col="8"> -->
+                            <field name = "movimientos_line">
+                                <tree>
+                                    <field name = "cuenta_id"/>    
+                                    <field name = "entra"/>    
+                                    <field name = "sale"/>    
+                                </tree>
+                            </field>
+                            
+                        <!-- </group> -->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        <record id="action_if_transaccion" model="ir.actions.act_window">
+            <field name="name">transaccions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">if.transaccion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem id="menu_transaccion" name="Transacciones"/>
+        <menuitem id="submenu_transaccion" name="transacciones" parent="menu_transaccion" action="action_if_transaccion"/>
+    </data>
+</openerp>
