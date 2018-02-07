@@ -17,24 +17,3 @@ class movimiento(models.Model):
     #     print values
     #     record = super(movimiento, self).create(values)
     #     return record
-
-
-class res_users(models.Model):
-    _inherit = "res.users"
-    cuenta_id = fields.One2many(comodel_name="if.cuenta", inverse_name="user_id", string="Cuenta")
-    recomendador_id = fields.Many2one("res.users", string="Recomendador")
-    recomendado_ids = fields.One2many(comodel_name="res.users", inverse_name="recomendador_id", string="Recomendados")
-
-
-class cuenta(models.Model):
-    _name = "if.cuenta"
-    _description = "Cuenta"
-    _rec_name = 'numero_cuenta'
-
-    @api.model
-    def get_numero_cuenta(self):
-        # seq = self.env["ir.sequence"].get("numero_tarea")
-        return self.env["ir.sequence"].get("seq_numero_cuenta")
-
-    numero_cuenta = fields.Char(string='Numero de cuenta', default=get_numero_cuenta)
-    user_id = fields.Many2one("res.users", "Titular")

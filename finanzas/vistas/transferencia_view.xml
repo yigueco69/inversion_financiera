@@ -9,7 +9,8 @@
             <field name="arch" type="xml">
                 <form string="Transferencia">
                     <header>
-                        <!-- <field name="state" widget="statusbar"/> -->
+                        <button name="continuar" type="object" string="Continuar"/>
+                        <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
                         <h1 class="mt0">
@@ -31,6 +32,11 @@
                             <field name = "user_receptor_name"/>
                             <field name = "user_receptor_email"/>
                             <field name = "user_receptor_phone"/>
+                        </group>
+                        <group>
+                            <field name = "cuenta_emisor"/>
+                            <field name = "cuenta_recetor"/>
+    
                         </group>
                         <!-- <group col="8"> -->
                             <field name = "movimientos_line">

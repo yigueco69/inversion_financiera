@@ -14,7 +14,7 @@
                     <sheet>
                         <group col="8">
                             <field name = "numero_cuenta"/>
-                            <field name = "user_id"/>
+                            <field name = "user_id" required="True"/>
                         </group>
                     </sheet>
                 </form>
