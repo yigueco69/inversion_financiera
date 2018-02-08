@@ -34,21 +34,22 @@ class transaccion(models.Model):
             ('borrador', 'Borrador'),
             ('hecho', 'Hecho'),
         ], default="borrador", string="Estado")
-    cuenta_emisor = fields.Many2one("if.cuenta", compute="get_cuenta_emisor")
-    cuenta_recetor = fields.Many2one("if.cuenta", compute="get_cuenta_recetor")
+    cuenta_emisor_id = fields.Many2one("if.cuenta", compute="get_cuenta_emisor_id")
+    saldo_disponible = fields.Float(related="cuenta_emisor_id.saldo", string="Saldo disponible")
+    cuenta_recetor_id = fields.Many2one("if.cuenta", compute="get_cuenta_recetor_id")
 
     @api.depends('user_emisor_id')
-    def get_cuenta_emisor(self):
+    def get_cuenta_emisor_id(self):
         try:
             # raise osv.UserError(self.user_emisor_id.cuenta_ids[0])
-            self.cuenta_emisor = self.user_emisor_id.cuenta_ids[0]
+            self.cuenta_emisor_id = self.user_emisor_id.cuenta_ids[0]
         except:
             pass
 
     @api.depends('user_receptor_id')
-    def get_cuenta_recetor(self):
+    def get_cuenta_recetor_id(self):
         try:
-            self.cuenta_recetor = self.user_receptor_id.cuenta_ids[0]
+            self.cuenta_recetor_id = self.user_receptor_id.cuenta_ids[0]
         except:
             pass
 
@@ -77,14 +78,14 @@ class transaccion(models.Model):
         if self.state == "borrador":
             self.movimientos_line |= self.env['if.movimiento'].create(
                                     {
-                                        'cuenta_id': self.cuenta_recetor.id,
+                                        'cuenta_id': self.cuenta_recetor_id.id,
                                         'entra': self.valor,
                                         'sale': 0,
                                         'transaccion_id': self.id,
                                     })
             self.movimientos_line |= self.env['if.movimiento'].create(
                                     {
-                                        'cuenta_id': self.cuenta_emisor.id,
+                                        'cuenta_id': self.cuenta_emisor_id.id,
                                         'entra': 0,
                                         'sale': self.valor,
                                         'transaccion_id': self.id,

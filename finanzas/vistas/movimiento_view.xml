@@ -15,6 +15,7 @@
                         <group col="8">
                             <field name = "numero_cuenta"/>
                             <field name = "user_id" required="True"/>
+                            <field name = "saldo"/>
                         </group>
                     </sheet>
                 </form>
@@ -31,6 +32,6 @@
 
 
         <menuitem id="menu_cuenta" name="Cuentas"/>
-        <menuitem id="submenu_cuenta" name="cuentas" parent="menu_cuenta" action="action_if_cuenta"/>
+        <menuitem id="submenu_cuenta" name="Cuentas" parent="menu_cuenta" action="action_if_cuenta"/>
     </data>
 </odoo>

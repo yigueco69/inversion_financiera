@@ -35,7 +35,7 @@ class cuenta(models.Model):
     user_id = fields.Many2one("res.users", "Titular")
     saldo = fields.Float("Saldo", compute="get_saldo")
 
-    @api.multi
+    @api.one
     def get_saldo(self):
         # self.env['if.movimiento'].sear
         movimiento = self.env['if.movimiento'].search([['cuenta_id', '=', self.id]])

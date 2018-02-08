@@ -18,7 +18,18 @@
                             <field name="name" readonly="1" class="oe_inline" />
                         </h1>
                         <div class="oe_button_box" name="button_box">
-                            <field name="user_emisor_id"/>
+                            <!-- <field name="user_emisor_id"/> -->
+                            <br/>
+                            <!-- Saldo<field name = "saldo_disponible"/> -->
+
+
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o">
+                                <div class="o_form_field o_stat_info">
+                                    <field name="user_emisor_id"/>
+                                    <span class="o_stat_value">Saldo:<field name="saldo_disponible" widget="monetary" options="{'currency_field': 'currency_id'}"/></span>
+                                    <!-- <span class="o_stat_text">Saldo</span> -->
+                                </div>
+                            </button>
                         </div>
 
                         <group>
@@ -34,8 +45,8 @@
                             <field name = "user_receptor_phone"/>
                         </group>
                         <group>
-                            <field name = "cuenta_emisor"/>
-                            <field name = "cuenta_recetor"/>
+                            <field name = "cuenta_emisor_id"/>
+                            <field name = "cuenta_recetor_id"/>
     
                         </group>
                         <!-- <group col="8"> -->
