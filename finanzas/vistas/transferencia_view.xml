@@ -2,51 +2,49 @@
 <openerp>
     <data>
 
-        <record id="if_transaccion_transferencia_form" model="ir.ui.view">
-            <field name="name">if.transaccion.form</field>
+        <record id="if_transferencia_form" model="ir.ui.view">
+            <field name="name">if.transaccion.transferencia.form</field>
             <field name="model">if.transaccion</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Transferencia">
+                <form string="Transferencia" create="false" edit="false" >
                     <header>
-                        <button name="continuar" type="object" string="Continuar"/>
+                        <button name="continuar" type="object" states="borrador" string="Continuar"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
                         <h1 class="mt0">
-                            <!-- <label string="Draft Refund" attrs="{'invisible': ['|',('state','not in',('draft',)), ('type','&lt;&gt;','out_refund')]}"/> -->
                             <field name="name" readonly="1" class="oe_inline" />
                         </h1>
                         <div class="oe_button_box" name="button_box">
-                            <!-- <field name="user_emisor_id"/> -->
                             <br/>
-                            <!-- Saldo<field name = "saldo_disponible"/> -->
-
-
                             <button type="object" class="oe_stat_button" icon="fa-pencil-square-o">
                                 <div class="o_form_field o_stat_info">
-                                    <field name="user_emisor_id"/>
-                                    <span class="o_stat_value">Saldo:<field name="saldo_disponible" widget="monetary" options="{'currency_field': 'currency_id'}"/></span>
+                                    
+                                    <span class="o_stat_value">Saldo:<field name="saldo_disponible_emisor" widget="monetary" options="{'currency_field': 'currency_id'}"/></span>
                                     <!-- <span class="o_stat_text">Saldo</span> -->
                                 </div>
                             </button>
                         </div>
-
                         <group>
+                            <field name = "fecha" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="user_emisor_id" invisible="True"/>
                             <field name = "tipo_transaccion"/>
                             <field name = "login_user_char"/>
-                            <field name = "valor"/>
+                            <field name = "valor" required="True"/>
                             
                             
                             <!-- <field name = "user_emisor_id"/> -->
-                            <field name = "user_receptor_id" invisible="1"/>
+                            <field name = "user_receptor_id" domain="[('es_virtual','!=',True)]" invisible="1"/>
                             <field name = "user_receptor_name"/>
                             <field name = "user_receptor_email"/>
                             <field name = "user_receptor_phone"/>
                         </group>
-                        <group>
+                        <group >
                             <field name = "cuenta_emisor_id"/>
-                            <field name = "cuenta_recetor_id"/>
+                            <field name = "cuenta_receptor_id"/>
     
                         </group>
                         <!-- <group col="8"> -->
@@ -63,8 +61,40 @@
                 </form>
             </field>
         </record>
-        
-        <record id="action_if_transaccion_transferencia" model="ir.actions.act_window">
+        <record id="if_transferencia_tree" model="ir.ui.view">
+            <field name="name">if.transaccion.tree</field>
+            <field name="model">if.transaccion</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Transferencia" create="false" edit="false" import="false">
+                    <field name="state" widget="statusbar"/>
+                    <field name="name" readonly="1" class="oe_inline" />
+                    <field name = "tipo_transaccion"/>
+                    <field name = "login_user_char"/>
+                    <field name = "valor"/>
+                    <field name = "user_receptor_id" invisible="1"/>
+                    <field name = "user_receptor_name"/>
+                    <field name = "user_receptor_email"/>
+                    <field name = "user_receptor_phone"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_if_transferencia_form" model="ir.actions.act_window">
+            <field name="name">Transferencia</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">if.transaccion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[('user_emisor_id','=',uid),('tipo_transaccion','=','transferencia')]</field>
+            <field name="context">{
+                'default_tipo_transaccion': 'transferencia',
+                }</field>
+                <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('if_transferencia_form')}),]"/>
+        </record>
+
+        <record id="action_if_transferencia_tree" model="ir.actions.act_window">
             <field name="name">Transferencia</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">if.transaccion</field>
@@ -72,27 +102,39 @@
             <field name="view_mode">tree,form</field>
             <field name="domain">[('user_emisor_id','=',uid),('tipo_transaccion','=','transferencia')]</field>
             <field name="context">{
-                'user_emisor_id': uid,
-                'default_user_emisor_id': uid,
                 'default_tipo_transaccion': 'transferencia',
                 }</field>
+
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('if_transferencia_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('if_transferencia_form')}),]"/>
         </record>
-
-        <!-- <record id="action_tree_view_hrz_comprobante_ingreso_herramienta_tree" model="ir.actions.act_window.view">
+<!--         <record id="action_form_if_transferencia_form_historial" model="ir.actions.act_window.view">
             <field eval="1" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="if_transferencia_form"/>
+            <field name="act_window_id" ref="action_if_transferencia_tree"/>
+        </record>
+        <record id="action_form_if_transferencia_tree_historial" model="ir.actions.act_window.view">
+            <field eval="0" name="sequence"/>
             <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_hrz_comprobante_ingreso_herramienta_tree"/>
-            <field name="act_window_id" ref="action_if_transaccion_transferencia"/>
-        </record> -->
-
-        <record id="action_form_if_transaccion_transferencia" model="ir.actions.act_window.view">
+            <field name="view_id" ref="if_transferencia_tree"/>
+            <field name="act_window_id" ref="action_if_transferencia_tree"/>
+        </record>
+     
+         -->
+<!-- 
+        <record id="action_form_if_transferencia" model="ir.actions.act_window.view">
             <field eval="2" name="sequence"/>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="if_transaccion_transferencia_form"/>
-            <field name="act_window_id" ref="action_if_transaccion_transferencia"/>
+            <field name="view_id" ref="if_transferencia_form"/>
+            <field name="act_window_id" ref="action_if_transferencia_form"/>
         </record>
+ -->
 
-
-        <menuitem id="submenu_transferencia" name="Transferencia" parent="menu_transaccion" action="action_if_transaccion_transferencia"/>
+        <menuitem id="menu_transferencia" name="Transferencia" parent="menu_transaccion" action="action_if_transferencia_form"/>
+        <menuitem id="menu_transferencia_form" name="Nueva" parent="menu_transferencia" action="action_if_transferencia_form"/>
+        <menuitem id="menu_transferencia_tree" name="Historial de transferencia" parent="menu_transferencia" action="action_if_transferencia_tree"/>
     </data>
 </openerp>

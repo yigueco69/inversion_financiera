@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="if_inversion_form" model="ir.ui.view">
+            <field name="name">if.inversion.form</field>
+            <field name="model">if.inversion</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Inversiones">
+                    <header>
+                        <field name = "state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name = "name"/>
+                            <field name = "compra_id" />
+                            <field name = "fecha" />
+                            <field name = "porcentaje_ejecucion" />
+                        </group>
+                        <group>
+                            
+                            <field name = "user_id"/>
+                            <field name = "precio_accion"/>
+                            <field name = "cantidad_acciones"/>
+                            <field name = "valor_total"/>
+                            
+                        </group>
+                        <field name = "movimientos_line"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="if_inversion_tree" model="ir.ui.view">
+            <field name="name">if.inversion.tree</field>
+            <field name="model">if.inversion</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Inversiones">
+                    <field name = "name"/>
+                    <field name = "compra_id" />
+                    <field name = "user_id"/>
+                    <field name = "precio_accion"/>
+                    <field name = "cantidad_acciones"/>
+                    <field name = "valor_total"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="if_inversion_kanban" model="ir.ui.view">
+            <field name="name">if.inversion.kanban</field>
+            <field name="model">if.inversion</field>
+            <field name="type">kanban</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="porcentaje_ejecucion"/> 
+                    <field name = "name"/>
+                    <field name = "compra_id" />
+                    <field name = "user_id"/>
+                    <field name = "precio_accion"/>
+                    <field name = "cantidad_acciones"/>
+                    <field name = "valor_total"/>
+                    <templates> 
+                        <t t-name="kanban-box">
+                            <!-- <div class="oe_kanban_global_click">  
+                                <field name="porcentaje_ejecucion" widget="gauge" style="width:240px;height:180px;cursor:pointer;" > 
+                                               Progreso                                
+                                </field>                            
+                            </div>   -->
+
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click oe_kanban_mass_mailing_campaign">
+                                <div class="o_dropdown_kanban dropdown">
+
+                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                                        <span class="fa fa-bars fa-lg"/>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <t t-if="widget.editable">
+                                            <li><a type="edit">Settings</a></li>
+                                        </t>
+                                        <t t-if="widget.deletable">
+                                            <li><a type="delete">Delete</a></li>
+                                        </t>
+                                        <li><ul class="oe_kanban_colorpicker"/></li>
+                                    </ul>
+                                </div>
+                                 <div class="oe_kanban_content">
+                                    <div>
+                                        <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)"
+                                            t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
+                                         <h3 class="oe_margin_bottom_8"><field name="name"/></h3>
+                                        
+                                    </div>
+                                    <div class="oe_clear"></div>
+                                    <div>
+                                        <div style="display: inline-block">
+                                            <field name="porcentaje_ejecucion" widget="gauge" style="width:240px; height: 180px;"/>
+                                        </div>
+                                        <div style="display: inline-block; vertical-align: top;">
+                                            <strong>Precio de la Accion</strong> <field name="precio_accion"/><br />
+                                            <strong>Acciones compradas</strong> <field name="cantidad_acciones"/> <br />
+                                            <strong>Total de la compra</strong> <field name="valor_total"/> <br />
+                                            <strong>Dias restantes</strong> <field name="dias_restantes"/> <br />
+                                            <strong>Dias transcurridos</strong> <field name="dias_transcurridos"/> <br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"></div>
+                            </div>  
+                         </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        
+        <record id="action_if_inversion" model="ir.actions.act_window">
+            <field name="name">Inversiones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">if.inversion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+        </record>
+
+
+        <!-- <menuitem id="menu_cuenta" name="Cuentas"/> -->
+        <!-- <menuitem id="submenu_cuenta" name="Cuentas" parent="menu_cuenta" action="action_if_cuenta"/> -->
+
+		<menuitem id="menu_inversiones" name="Inversiones" parent="menu_transaccion" action="action_if_inversion"/>
+    </data>
+</odoo>

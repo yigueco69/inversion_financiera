@@ -2,36 +2,35 @@
 <odoo>
     <data>
 
-        <record id="if_cuenta_form" model="ir.ui.view">
-            <field name="name">if.cuenta.form</field>
-            <field name="model">if.cuenta</field>
+        <record id="if_movimiento_form" model="ir.ui.view">
+            <field name="name">if.movimiento.form</field>
+            <field name="model">if.movimiento</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Cuentas">
-                    <header>
-                        <!-- <field name="state" widget="statusbar"/> -->
-                    </header>
-                    <sheet>
-                        <group col="8">
-                            <field name = "numero_cuenta"/>
-                            <field name = "user_id" required="True"/>
-                            <field name = "saldo"/>
-                        </group>
-                    </sheet>
+                <form string="Movimiento">
+                    <group>
+                        <field name = "cuenta_id"/>
+                        <field name = "entra"/>
+                        <field name = "sale"/>
+                        <field name = "transaccion_id"/>
+                    </group>
                 </form>
             </field>
         </record>
         
-        <record id="action_if_cuenta" model="ir.actions.act_window">
-            <field name="name">Cuentas</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">if.cuenta</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+        <record id="if_movimiento_tree" model="ir.ui.view">
+            <field name="name">if.movimiento.tree</field>
+            <field name="model">if.movimiento</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Movimientos">
+                    <field name = "cuenta_id"/>
+                    <field name = "entra"/>
+                    <field name = "sale"/>
+                    <field name = "transaccion_id"/>
+                </tree>
+            </field>
         </record>
 
-
-        <menuitem id="menu_cuenta" name="Cuentas"/>
-        <menuitem id="submenu_cuenta" name="Cuentas" parent="menu_cuenta" action="action_if_cuenta"/>
     </data>
 </odoo>

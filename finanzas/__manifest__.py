@@ -10,15 +10,20 @@
     "author": "RBS",
     "license": "LGPL-3",
     "depends": [
+        "base",
         'web',
     ],
     "data": [
+            'vistas/inversion_view.xml',
             'vistas/movimiento_view.xml',
+            'vistas/cuenta_view.xml',
             'vistas/retiro_view.xml',
             'vistas/compra_view.xml',
             'vistas/transferencia_view.xml',
             'vistas/res_users_view.xml',
-            'sequence.xml'
+            'sequence.xml',
+            "models/config.xml",
+            "ir_parameter.xml",
 	    ],
     'qweb': [
     ],

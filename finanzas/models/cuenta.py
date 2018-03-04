@@ -5,6 +5,7 @@ from openerp.osv import osv
 
 class res_users(models.Model):
     _inherit = "res.users"
+    es_virtual = fields.Boolean("Es virtual")
     cuenta_ids = fields.One2many(comodel_name="if.cuenta", inverse_name="user_id", string="Cuenta", readonly=True)
     recomendador_id = fields.Many2one("res.users", string="Recomendador")
     recomendado_ids = fields.One2many(comodel_name="res.users", inverse_name="recomendador_id", string="Recomendados")
@@ -34,6 +35,7 @@ class cuenta(models.Model):
     numero_cuenta = fields.Char(string='Numero de cuenta', default=get_numero_cuenta)
     user_id = fields.Many2one("res.users", "Titular")
     saldo = fields.Float("Saldo", compute="get_saldo")
+    movimiento_ids = fields.One2many(comodel_name="if.movimiento", inverse_name="cuenta_id", string="Movimientos")
 
     @api.one
     def get_saldo(self):

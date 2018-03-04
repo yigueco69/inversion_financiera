@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    
+    <data noupdate="1">
+        <record id="user_compra_retiro_id" model="ir.config_parameter">
+            <field name="key">user_compra_retiro_id</field>
+            <field name="value">True</field>
+        </record>
+        <record id="precio_accion" model="ir.config_parameter">
+            <field name="key">precio_accion</field>
+            <field name="value">150</field>
+        </record>
+    </data>
+</openerp>

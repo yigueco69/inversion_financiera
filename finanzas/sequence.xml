@@ -14,6 +14,12 @@
 		    <field name="prefix">t_%(year)s%(month)s</field> 
 		    <field name="padding">7</field> 
 		</record>
+		<record id="seq_numero_inversion" model="ir.sequence"> 
+		    <field name="name">Numero de inversion</field> 
+		    <field name="code">seq_numero_inversion</field> 
+		    <field name="prefix">inv_%(year)s%(month)s</field> 
+		    <field name="padding">7</field> 
+		</record>
 
 
 	</data>

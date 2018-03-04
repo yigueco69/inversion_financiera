@@ -1,0 +1,5 @@
+nueva compra,
+historial de compra
+
+nuevo retiro,
+historial de retiros

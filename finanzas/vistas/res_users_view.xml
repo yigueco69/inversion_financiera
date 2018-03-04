@@ -14,6 +14,7 @@
                             <button name="preference_change_password" type="object" string="Change password" class="oe_link"/>
                         </div>
                         <field name="image" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;}"/>
+                        <field name="es_virtual"/>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only"/>
                             <h1><field name="name" required="1"/></h1>
@@ -60,6 +61,7 @@
             <field name="inherit_id" ref="base.view_users_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="es_virtual"/>
                     <field name="cuenta_ids"/>
                 </xpath>
             </field>

@@ -2,53 +2,125 @@
 <openerp>
     <data>
 
-        <record id="if_transaccion_compra_form" model="ir.ui.view">
-            <field name="name">if.transaccion.form</field>
+        <record id="if_compra_form" model="ir.ui.view">
+            <field name="name">if.transaccion.compra.form</field>
             <field name="model">if.transaccion</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Compra">
                     <header>
-                        <!-- <field name="state" widget="statusbar"/> -->
+                        <button name="continuar" type="object" states="borrador" string="Continuar"/>
+                        <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
-
+                        <h1 class="mt0">
+                            <field name="name" readonly="1" class="oe_inline" />
+                        </h1>
+                        <div class="oe_button_box" name="button_box">
+                            <br/>
+                            <button type="object" class="oe_stat_button" icon="fa-pencil-square-o">
+                                <div class="o_form_field o_stat_info">
+                                    
+                                    <span class="o_stat_value">Saldo:<field name="saldo_disponible_emisor" widget="monetary" options="{'currency_field': 'currency_id'}"/></span>
+                                    <!-- <span class="o_stat_text">Saldo</span> -->
+                                </div>
+                            </button>
+                        </div>
                         <group>
-                            <field name = "name"/>
-                            <field name = "user_emisor_id"/>
-                            <field name = "user_receptor_id"/>
+                            <field name = "fecha" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="user_emisor_id" />
+                            <field name="user_receptor_id"/>
+
+                            <field name = "tipo_transaccion"/>
+                            <!-- <field name = "login_user_char"/> -->
+                            <field name = "modo_pago"/>
+                            <field name = "cantidad_acciones"/>
+                            <field name = "valor_inversion"/>
+
+                            
+              
+                        </group>
+                        <group invisible="True">
+                            <field name = "cuenta_emisor_id"/>
+                            <field name = "cuenta_receptor_id"/>
+    
                         </group>
                         <!-- <group col="8"> -->
-                            <field name = "movimientos_line">
-                                <tree>
+                            <field name = "movimientos_line"  invisible="True">
+                                <tree editable="bottom">
                                     <field name = "cuenta_id"/>    
                                     <field name = "entra"/>    
                                     <field name = "sale"/>    
                                 </tree>
                             </field>
-                            
-                        <!-- </group> -->
                     </sheet>
                 </form>
             </field>
         </record>
-        
-        <record id="action_if_transaccion_compra" model="ir.actions.act_window">
-            <field name="name">Compra</field>
+        <record id="if_compra_tree" model="ir.ui.view">
+            <field name="name">if.transaccion.compra.tree</field>
+            <field name="model">if.transaccion</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Compra" create="false" edit="false" import="false">
+                    <field name="state" widget="statusbar"/>
+                    <field name="name" readonly="1" class="oe_inline" />
+                    <field name = "tipo_transaccion"/>
+                    <field name = "login_user_char"/>
+                    <field name = "valor"/>
+                    <field name = "user_emisor_id" invisible="1"/>
+                    <field name = "user_emisor_name"/>
+                    <field name = "user_emisor_email"/>
+                    <field name = "user_emisor_phone"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_if_compra_form" model="ir.actions.act_window">
+            <field name="name">Compras</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">if.transaccion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[('tipo_transaccion','=','compra')]</field> <!-- por definir el uid -->
+            <field name="context">{
+                'default_tipo_transaccion': 'compra',
+                }</field>
+        </record>
+        <record id="action_if_compra_tree" model="ir.actions.act_window">
+            <field name="name">Compras</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">if.transaccion</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name="domain">[('tipo_transaccion','=','compra')]</field>
+            <field name="context">{
+                'default_tipo_transaccion': 'compra',
+                }</field>
         </record>
-
-        <record id="action_form_if_transaccion_compra" model="ir.actions.act_window.view">
+<!-- self.env['ir.config_parameter'].get_param('user_compra_retiro_id') -->
+        <record id="action_form_if_compra_form_historial" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="if_compra_form"/>
+            <field name="act_window_id" ref="action_if_compra_tree"/>
+        </record>
+        <record id="action_form_if_compra_tree_historial" model="ir.actions.act_window.view">
+            <field eval="0" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="if_compra_tree"/>
+            <field name="act_window_id" ref="action_if_compra_tree"/>
+        </record>
+        <record id="action_form_if_compra" model="ir.actions.act_window.view">
             <field eval="2" name="sequence"/>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="if_transaccion_compra_form"/>
-            <field name="act_window_id" ref="action_if_transaccion_compra"/>
+            <field name="view_id" ref="if_compra_form"/>
+            <field name="act_window_id" ref="action_if_compra_form"/>
         </record>
 
-
-        <menuitem id="submenu_compra" name="Compra" parent="menu_transaccion" action="action_if_transaccion_compra"/>
+        <menuitem id="menu_compra" name="Compras" parent="menu_transaccion" action="action_if_compra_form"/>
+        <menuitem id="menu_compra_form" name="Nueva" parent="menu_compra" action="action_if_compra_form"/>
+        <menuitem id="menu_compra_tree" name="Historial de compras" parent="menu_compra" action="action_if_compra_tree"/>
     </data>
 </openerp>
