@@ -13,6 +13,16 @@
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
+                        
+                            <!-- <span class="btn btn-primary btn-file mt16">
+                                <form t-attf-action="/someurl" method="post" role="form" nctype="multipart/form-data"> 
+                                Upload picture 
+                                <input type="file" name="picture"/>
+                                <button type="submit" form="form1" value="Submit">Submit</button>
+
+                        </form> 
+                            </span> -->
+                             
                         <h1 class="mt0">
                             <field name="name" readonly="1" class="oe_inline" />
                         </h1>

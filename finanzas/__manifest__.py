@@ -14,6 +14,7 @@
         'web',
     ],
     "data": [
+            # 'static/src/xml/buttton_post_view.xml',
             'vistas/inversion_view.xml',
             'vistas/movimiento_view.xml',
             'vistas/cuenta_view.xml',
@@ -24,9 +25,12 @@
             'sequence.xml',
             "models/config.xml",
             "ir_parameter.xml",
-	    ],
-    'qweb': [
     ],
+
+    # 'qweb': [
+    #   'static/src/xml/widget.xml'
+    # ],
+
     'installable': True,
     'auto_install': False,
     'application': True,

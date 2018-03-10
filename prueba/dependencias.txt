@@ -1,6 +1,0 @@
-este es !!!
-pip install pil
-pillow
-
-
-doctemplate

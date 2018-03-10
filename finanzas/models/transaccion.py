@@ -10,7 +10,7 @@ class transaccion(models.Model):
     _name = 'if.transaccion'
     _description = "Transaccion"
     name = fields.Char(string='Numero de transaccion', readonly=True)
-    fecha = fields.Datetime("Fecha")
+    fecha = fields.Datetime("Fecha",default=datetime.now())
     movimientos_line = fields.One2many(comodel_name='if.movimiento', inverse_name="transaccion_id", string="Movimientos")
     user_emisor_id = fields.Many2one("res.users", "Usuario Emisor")
     user_emisor_name = fields.Char(related="user_emisor_id.name", string="Nombre del usuario", readonly=True)
@@ -125,10 +125,34 @@ class transaccion(models.Model):
                                         })
                 self.fecha = datetime.now()
                 self.state = "hecho"
+
         if self.tipo_transaccion == "compra":
             if self.state == "borrador":
                 if self.modo_pago == "coinpayment":
-                    pass  # <---------------  codigo para coinpayment
+                    # context = {
+                    #     "cmd": '_pay_simple',
+                    #     "reset": '1',
+                    #     "merchant": '2c7b76970e7e4a26e9957f4b277c5ace',
+                    #     "invoice": '1312680',
+                    #     "currency": 'DGB',
+                    #     "amountf": '0.011',
+                    #     "item_name": 'Invierte baby',
+
+                    # }
+                    return {
+                        'type': 'ir.actions.act_url',
+                        # 'type': 'ir.actions.act_url',
+                        # 'context': context,
+                        # 'tag': 'reload',
+                        'url': 'https://www.coinpayments.net/index.php?cmd={0}&reset={1}&merchant={2}&invoice={3}&currency={4}&amountf={5}&item_name={6}'.format("_pay_simple","1","2c7b76970e7e4a26e9957f4b277c5ace",self.id,"USD",self.valor_inversion,"Acciones"),
+                        'method': 'POST',
+                        'target': 'new',
+                    }
+                    # return {
+                    #     'type': 'ir.actions.client',
+                    #     'tag': 'reload',
+                    #     'params': {'menu_id': menu_ids and menu_ids[0] or False}
+                    # }
                 if self.modo_pago == "saldo":
                     if self.saldo_disponible_receptor < self.valor_inversion:
                         raise UserError(_('Usted no tiene saldo disponible para realizar esta transferencia'))
